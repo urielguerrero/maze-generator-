@@ -58,7 +58,7 @@ function draw() {
   }
 
   if (posX > 285) {
-    posX += - move;
+    posX -= move;
   }
 
   if (posY < 0) {
@@ -66,7 +66,7 @@ function draw() {
   }
 
   if (posY > 285) {
-    posY += - move;
+    posY -= move;
   }
   //create window boundaries
 
