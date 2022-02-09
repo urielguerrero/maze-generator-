@@ -7,8 +7,8 @@ var current;
 var stack = [];
 let value = 0;
 // variables for new square block
-var playerx = 0;
-var playery = 0;
+var posX = 0;
+var posY = 0;
 function setup() {
   createCanvas(300, 300);
   cols = floor(width / w);
@@ -50,26 +50,24 @@ function draw() {
   }
   fill(value);
 
-  rect(playerx, playery, 15, 15);
+  rect(posX, posY, 15, 15);
   //create window boundaries for rect 
   //https://www.youtube.com/watch?v=JV5XBmaQdIA 
-  if (playerx < 0) {
-    playerx = playerx + move;
+  if (posX < 0) {
+    posX = posX + move;
   }
 
-  if (playerx > 285) {
-    playerx = playerx - move;
+  if (posX > 285) {
+    posX = posX - move;
   }
 
-  if (playery < 0) {
-    playery = playery + move;
+  if (posY < 0) {
+    posY = posY + move;
   }
 
-  if (playery > 285) {
-    playery = playery - move;
+  if (posY > 285) {
+    posY = posY - move;
   }
-
-
   //create window boundaries
 
   //https://stackoverflow.com/questions/43154831/detecting-collision-with-color-on-a-canvas-in-html5javascript/43214029 
@@ -117,7 +115,7 @@ function Cell(i, j) {
   this.walls = [true, true, true, true];
   this.visited = false;
 
-//https://www.youtube.com/watch?v=D8UgRyRnvXU
+  //https://www.youtube.com/watch?v=D8UgRyRnvXU
   this.checkNeighbors = function () {
     var neighbors = [];
 
@@ -196,16 +194,16 @@ function Cell(i, j) {
 function keyPressed() {
   //console.log(keyCode);
   if (keyCode === 39) {
-    playerx += 5;
+    posX += 5;
   }
   if (keyCode === 37) {
-    playerx += -5;
+    posX += -5;
   }
   if (keyCode === 40) {
-    playery += 5;
+    posY += 5;
   }
   if (keyCode === 38) {
-    playery += -5;
+    posY += -5;
   }
 }
 
