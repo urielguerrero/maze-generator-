@@ -54,19 +54,19 @@ function draw() {
   //create window boundaries for rect 
   //https://www.youtube.com/watch?v=JV5XBmaQdIA 
   if (posX < 0) {
-    posX = posX + move;
+    posX += move;
   }
 
   if (posX > 285) {
-    posX = posX - move;
+    posX -= move;
   }
 
   if (posY < 0) {
-    posY = posY + move;
+    posY += move;
   }
 
   if (posY > 285) {
-    posY = posY - move;
+    posY -= move;
   }
   //create window boundaries
 
