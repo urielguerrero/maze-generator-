@@ -9,12 +9,12 @@ let value = 0;
 // variables for new square block
 var posX = 0;
 var posY = 0;
+
 function setup() {
   createCanvas(300, 300);
   cols = floor(width / w);
   rows = floor(height / w);
-  //frameRate(5);
-
+  // frameRate(5);
   for (var j = 0; j < rows; j++) {
     for (var i = 0; i < cols; i++) {
       var cell = new Cell(i, j);
@@ -36,22 +36,22 @@ function draw() {
   var next = current.checkNeighbors();
   if (next) {
     next.visited = true;
-
     // STEP 2
     stack.push(current);
-
     // STEP 3
     removeWalls(current, next);
-
     // STEP 4
     current = next;
   } else if (stack.length > 0) {
     current = stack.pop();
   }
+  // creates a player block
   fill(value);
 
   rect(posX, posY, 15, 15);
-  //create window boundaries for rect 
+  //
+
+  //create window(canvas) boundaries for rect 
   //https://www.youtube.com/watch?v=JV5XBmaQdIA 
   if (posX < 0) {
     posX += move;
@@ -68,13 +68,8 @@ function draw() {
   if (posY > 285) {
     posY -= move;
   }
-  //create window boundaries
 
   //https://stackoverflow.com/questions/43154831/detecting-collision-with-color-on-a-canvas-in-html5javascript/43214029 
-  // might use as reference to 
-  //  if(playx < 0){//off left of window
-  //   playerx = playerx += 10;
-  //  }
 
 }
 // // each cell needs to know what column and row it's in, each cell as a column and row number to be easily identified 
@@ -118,7 +113,7 @@ function Cell(i, j) {
   //https://www.youtube.com/watch?v=D8UgRyRnvXU
   this.checkNeighbors = function () {
     var neighbors = [];
-
+    // the four options a box is open 
     var top = grid[index(i, j - 1)];
     var right = grid[index(i + 1, j)];
     var bottom = grid[index(i, j + 1)];
@@ -147,13 +142,14 @@ function Cell(i, j) {
 
   }
   // function that creates the rectangle thing that fills the maze 
-  // changes the color of the square block from the actual maze so that its noticeable
+
   this.highlight = function () {
     var x = this.i * w;
     var y = this.j * w;
-    noStroke();
-    fill(0, 0, 255, 200);
-    rect(x, y, w, w);
+    // changes the color of the square block from the actual maze so that its noticeable(optional)
+    // noStroke();
+    // fill(0, 0, 255, 200);
+    // rect(x, y, w, w);
 
   }
 
@@ -173,7 +169,18 @@ function Cell(i, j) {
     if (this.walls[3]) {
       line(x, y + w, x, y);
     }
-    // changes the color of the maze to indicate that the cell its currently at has just been visited 
+    this.rectColor(x, y, w);
+    // if (this.visited) {
+    //   noStroke();
+    //   // fill(255, 0, 255, 100);
+    //   // color of filled maze (optional)
+    //   fill(204, 102, 0, 200);
+    //   rect(x, y, w, w);
+    // }
+  }
+
+  // changes the color of the maze to indicate that the cell its currently at has just been visited 
+  this.rectColor = function (x, y, w) {
     if (this.visited) {
       noStroke();
       // fill(255, 0, 255, 100);
@@ -182,9 +189,21 @@ function Cell(i, j) {
     }
   }
 }
+//
+function pixelToCoord(posX, posY) {
+  let x = Math.floor(posX / 20);
+  let y = Math.floor(posY / 20);
+  return [x, y];
+}
+// this function we are combining functions PixelToCoord, KeyPressed, and index
+function cellAt(posX, posY) {
+  return pixelToCoord(posX, posY);
+}
+// determines walls  from the cell position your at 
+function cellWall() {
 
+}
 
-// new function that changes position of this.highlight - square block 
 //https://p5js.org/reference/#/p5/keyPressed 
 // use as reference to move square block 
 //https://replit.com/@JasonHallsten/snek?v=1
@@ -192,32 +211,23 @@ function Cell(i, j) {
 
 // when canvas is pressed with mouse the square block is moved
 function keyPressed() {
-  //console.log(keyCode);
+  console.log("In " + cellAt(posX, posY));
+  // right arrow
   if (keyCode === 39) {
     posX += 5;
   }
+  // left arrow 
   if (keyCode === 37) {
     posX += -5;
   }
+
+  // up arrow 
   if (keyCode === 40) {
     posY += 5;
   }
+  // down arrow 
   if (keyCode === 38) {
     posY += -5;
   }
 }
-
- /* if( keyCode === 39 ) {
-   playerx = playerx + 5;
-  }
-  if( keyCode === 37 ){
-    playerx = playerx -5;
-  } 
-  if( keyCode === 40){
-    playery = playery + 5;
-  }
-  if( keyCode === 38){
-    playery = playery -5;
-  }
-}*/
 
