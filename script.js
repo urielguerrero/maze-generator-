@@ -48,7 +48,7 @@ function draw() {
   // creates a player block
   fill(value);
 
-  rect(posX, posY, 15, 15);
+  rect(posX, posY, 20, 20);
   //
 
   //create window(canvas) boundaries for rect 
@@ -197,12 +197,13 @@ function pixelToCoord(posX, posY) {
 }
 // this function we are combining functions PixelToCoord, KeyPressed, and index
 function cellAt(posX, posY) {
-  return pixelToCoord(posX, posY);
+  let c = pixelToCoord(posX, posY);
+  let x = c[0];
+  let y = c[1];
+  let i = index(x, y);
+  return grid[i];
 }
-// determines walls  from the cell position your at 
-function cellWall() {
 
-}
 
 //https://p5js.org/reference/#/p5/keyPressed 
 // use as reference to move square block 
@@ -211,23 +212,34 @@ function cellWall() {
 
 // when canvas is pressed with mouse the square block is moved
 function keyPressed() {
-  console.log("In " + cellAt(posX, posY));
+  let cell = cellAt(posX, posY);
+  console.log(cell.walls);
+  // console.log("In " + cellAt(posX, posY));
   // right arrow
   if (keyCode === 39) {
-    posX += 5;
+    if (cell.walls[1] == false) {
+      posX += w;
+    }
+
   }
   // left arrow 
   if (keyCode === 37) {
-    posX += -5;
+     if (cell.walls[3] == false) {
+      posX -= w;
+     }
   }
 
-  // up arrow 
-  if (keyCode === 40) {
-    posY += 5;
-  }
   // down arrow 
+  if (keyCode === 40) {
+     if (cell.walls[2] == false) {
+      posY += w;
+    }
+  }
+  // up arrow 
   if (keyCode === 38) {
-    posY += -5;
+    if (cell.walls[0] == false) {
+      posY -= w;
+    }
   }
 }
 
